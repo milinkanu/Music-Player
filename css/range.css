@@ -1,0 +1,82 @@
+/* General styling for the range input */
+input[type="range"] {
+    -webkit-appearance: none; /* Remove default styling for WebKit browsers */
+    appearance: none; /* Remove default styling for modern browsers */
+    width: 100%; /* Set the width of the range slider */
+    height: 2x; /* Set the height of the track */
+    background: white; /* White track color */
+    border: 1px solid black; /* 1px black border around the track */
+    border-radius: 5px; /* Rounded corners for the track */
+    outline: none; /* Remove focus outline */
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+/* Styling the track for WebKit browsers (Chrome, Safari, Edge) */
+input[type="range"]::-webkit-slider-runnable-track {
+    background: white; /* White track color */
+    border: 1px solid black; /* 1px black border around the track */
+    height: 2px; /* Track height */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Styling the thumb for WebKit browsers */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Remove default thumb styling */
+    appearance: none;
+    width: 20px; /* Thumb width */
+    height: 20px; /* Thumb height */
+    background: black; /* Black thumb color */
+    border-radius: 50%; /* Make the thumb circular */
+    cursor: pointer; /* Change cursor to pointer */
+    position: relative; /* Position relative to align with the track */
+    top: -6px; /* Adjust the thumb's vertical alignment */
+}
+
+/* Styling the track for Firefox */
+input[type="range"]::-moz-range-track {
+    background: white; /* White track color */
+    border: 1px solid black; /* 1px black border around the track */
+    height: 2px; /* Track height */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Styling the thumb for Firefox */
+input[type="range"]::-moz-range-thumb {
+    width: 20px; /* Thumb width */
+    height: 20px; /* Thumb height */
+    background: black; /* Black thumb color */
+    border-radius: 50%; /* Make the thumb circular */
+    cursor: pointer; /* Change cursor to pointer */
+    border: 1px solid white; /* 1px white border around the thumb */
+    position: relative; /* Position relative to align with the track */
+    top: -6px; /* Adjust the thumb's vertical alignment */
+}
+
+/* Styling the track for Internet Explorer */
+input[type="range"]::-ms-track {
+    background: transparent; /* Remove default track styling */
+    border-color: transparent;
+    color: transparent;
+    height: 2px;
+}
+
+input[type="range"]::-ms-fill-lower {
+    background: white; /* White track color */
+    border-radius: 5px;
+}
+
+input[type="range"]::-ms-fill-upper {
+    background: white; /* White track color */
+    border-radius: 5px;
+}
+
+input[type="range"]::-ms-thumb {
+    width: 20px; /* Thumb width */
+    height: 20px; /* Thumb height */
+    background: black; /* Black thumb color */
+    border-radius: 50%; /* Make the thumb circular */
+    cursor: pointer; /* Change cursor to pointer */
+    border: 1px solid white; /* 1px white border around the thumb */
+    position: relative; /* Position relative to align with the track */
+    top: -6px; /* Adjust the thumb's vertical alignment */
+}
