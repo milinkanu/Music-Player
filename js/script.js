@@ -255,6 +255,8 @@ async function main() {
 
                 document.querySelector(".circle").style.left = "0%"; // Reset progress bar
             }
+
+            document.querySelector(".left").style.left = 0
         });
     });
 
