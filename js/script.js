@@ -1,21 +1,23 @@
 console.log('Lets write JavaScript');
 
+const BASE_URL = "https://raw.githubusercontent.com/milinkanu/Music-Player/main/Songs";
+
 let currentSong = new Audio();
 let playButton = null;
 let songs = [];
 let currFolder;
 
 async function getSongs(folder) {
-    currFolder = folder
-    let a = await fetch(`songs/${currFolder}/`)
-    let response = await a.text()
-    let div = document.createElement("div")
+    currFolder = folder;
+    let a = await fetch(`${BASE_URL}/${currFolder}/`);
+    let response = await a.text();
+    let div = document.createElement("div");
     div.innerHTML = response;
-    let as = div.getElementsByTagName("a")
-    songs = []
+    let as = div.getElementsByTagName("a");
+    songs = [];
 
-    let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0]
-    songUL.innerHTML = ""
+    let songUL = document.querySelector(".songList").getElementsByTagName("ul")[0];
+    songUL.innerHTML = "";
 
     for (let index = 0; index < as.length; index++) {
         const element = as[index];
@@ -24,7 +26,7 @@ async function getSongs(folder) {
             let songName = fileName.split("%20-%20")[0]; // Extract the part before " - "
             songs.push(element.href);
             if (element.href.endsWith("%20-%20PagalWorld.mp3")) {
-                songUL.innerHTML += `<li>
+            songUL.innerHTML += `<li>
                                     <img class="invert" src="img/music.svg" alt="">
                                     <div class="info">
                                         <div>${(element.href.split(`/${currFolder}/`)[1]).replace("%20-%20PagalWorld.mp3", "").replaceAll("%20", " ")}</div>
@@ -35,8 +37,8 @@ async function getSongs(folder) {
                                         <img class="invert" src="img/play.svg" alt="">
                                     </div>
                                 </li>`;
-            }
-            // /songs/Spotify/Ek%20Toh%20Kum%20Zindagani%20(From%20_Marjaavaan_)%20-%20Neha%20Kakkar.mp3
+        }
+    // /songs/Spotify/Ek%20Toh%20Kum%20Zindagani%20(From%20_Marjaavaan_)%20-%20Neha%20Kakkar.mp3
             else{
                 let fileName = element.href.split(`/${currFolder}/`)[1]; // Extract the filename
                 let nameElement = element.getElementsByClassName("name")[0];
@@ -85,15 +87,20 @@ const playMusic = (track, pause = false) => {
     // Pause the currently playing song
     currentSong.pause();
 
-    currentSong.src = track
-    if(!pause){
-    currentSong.play().catch((error) => {
-        console.error("Error playing audio:", error);
-    });}
+    currentSong.src = track;
+    if (!pause) {
+        currentSong.play().catch((error) => {
+            console.error("Error playing audio:", error);
+        });
+    }
     if (playButton) {
         playButton.src = "img/pause.svg"; // Update the play button icon
     }
-    document.querySelector(".songinfo").innerHTML = `${(track.split(`/${currFolder}/`)[1]).replace("%20-%20PagalWorld.mp3", "").replaceAll("%20", " ").replaceAll("_", "").replace(".mp3", "")}`
+    document.querySelector(".songinfo").innerHTML = `${(track.split(`/${currFolder}/`)[1])
+        .replace("%20-%20PagalWorld.mp3", "")
+        .replaceAll("%20", " ")
+        .replaceAll("_", "")
+        .replace(".mp3", "")}`;
 
     currentSong.addEventListener("loadedmetadata", () => {
         const totalDuration = formatTime(currentSong.duration); // Format the duration
@@ -104,18 +111,21 @@ const playMusic = (track, pause = false) => {
     currentSong.addEventListener("timeupdate", () => {
         const currentTime = formatTime(currentSong.currentTime); // Format the current time
         const totalDuration = formatTime(currentSong.duration); // Format the duration
-        document.querySelector(".songtime").innerHTML = `${currentTime} / ${totalDuration}`
-        document.querySelector(".circle").style.left = (currentSong.currentTime / currentSong.duration) * 100 + "%"; // circle aage badega song ke saath
+        document.querySelector(".songtime").innerHTML = `${currentTime} / ${totalDuration}`;
+        document.querySelector(".circle").style.left =
+            (currentSong.currentTime / currentSong.duration) * 100 + "%"; // Update progress bar
     });
 
-    // Add an event listner to seekbar
-    document.querySelector(".seekbar").addEventListener("click", e =>{
-        document.querySelector(".circle").style.left = (e.offsetX / e.target.getBoundingClientRect().width)*100 + "%";
-        currentSong.currentTime = (currentSong.duration * (e.offsetX / e.target.getBoundingClientRect().width)*100)/100;
-    } )
+    // Add an event listener to the seekbar
+    document.querySelector(".seekbar").addEventListener("click", (e) => {
+        document.querySelector(".circle").style.left =
+            (e.offsetX / e.target.getBoundingClientRect().width) * 100 + "%";
+        currentSong.currentTime =
+            (currentSong.duration * (e.offsetX / e.target.getBoundingClientRect().width) * 100) / 100;
+    });
 
     return songs;
-}
+};
 
 // Helper function to format time in MM:SS
 const formatTime = (time) => {
@@ -125,7 +135,7 @@ const formatTime = (time) => {
 };
 
 async function displayAlbums() {
-    let a = await fetch(`http://127.0.0.1:5500/songs/`);
+    let a = await fetch(`${BASE_URL}/`);
     let response = await a.text();
     let div = document.createElement("div");
     div.innerHTML = response;
@@ -136,13 +146,13 @@ async function displayAlbums() {
     console.log("Card Container:", cardContainer); // Debugging
 
     for (const e of anchors) {
-        // Ensure it's not the root /songs/ URL and extract the folder name
-        if (e.href.includes("/songs/") && !e.href.endsWith("/songs/")) {
+        // Ensure it's not the root /Songs/ URL and extract the folder name
+        if (e.href.includes("/Songs/") && !e.href.endsWith("/Songs/")) {
             let folder = e.href.split("/").filter(part => part !== "").slice(-1)[0]; // Extract the last non-empty part
             console.log("Folder:", folder); // Debugging
 
             try {
-                let url = `http://127.0.0.1:5500/songs/${folder}/info.json`;
+                let url = `${BASE_URL}/${folder}/info.json`;
                 console.log("Fetching URL:", url); // Debugging
                 let a = await fetch(url);
                 let response = await a.json();
@@ -156,7 +166,7 @@ async function displayAlbums() {
                                         fill="black" transform="scale(0.8) translate(3,3)" />
                                 </svg>
                             </div>
-                            <img src="/songs/${folder}/cover.jpg" alt="">
+                            <img src="${BASE_URL}/${folder}/cover.jpg" alt="">
                             <h2>${response.title}</h2>
                             <p>${response.description}</p>
                         </div>`;
