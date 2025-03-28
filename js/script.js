@@ -1,6 +1,7 @@
 console.log('Lets write JavaScript');
 
-const BASE_URL = "https://raw.githubusercontent.com/milinkanu/Music-Player/main/Songs";
+//const BASE_URL = "https://raw.githubusercontent.com/milinkanu/Music-Player/main/Songs";
+const BASE_URL = "https://github.com/milinkanu/Music-Player/tree/main/Songs";
 
 let currentSong = new Audio();
 let playButton = null;
